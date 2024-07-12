@@ -29,6 +29,12 @@ public class Main {
         return new String(characters);
     }
 
+    public static void printAll(String candidate, String encoded, String randomized) {
+        print(  "Candidate:\t\t"+candidate+
+                "\nEncoded:\t\t"+encoded+
+                "\nYour password:\t"+randomized);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -39,8 +45,6 @@ public class Main {
 
         String randomized = shuffleString(encoded);
 
-        print(  "Candidate:\t\t"+candidate+
-                "\nEncoded:\t\t"+encoded+
-                "\nYour password:\t"+randomized);
+        printAll(candidate, encoded, randomized);
     }
 }
