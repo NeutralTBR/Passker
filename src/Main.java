@@ -3,6 +3,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Base64;
 import java.util.Random;
+import java.awt.Toolkit;
+import java.awt.datatransfer.*;
 
 public class Main {
     public static void print(String obj) {
@@ -35,6 +37,12 @@ public class Main {
                 "\nYour password:\t"+randomized);
     }
 
+    public static void copyToClipboard(String str) {
+        StringSelection selection = new StringSelection(str);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, null);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -42,9 +50,18 @@ public class Main {
         String candidate = sc.nextLine();
 
         String encoded = encode(candidate);
-
         String randomized = shuffleString(encoded);
 
+        encoded = encode(randomized);
+        randomized = shuffleString(encoded);
+
+        encoded = encode(randomized);
+        randomized = shuffleString(encoded);
+
         printAll(candidate, encoded, randomized);
+
+        copyToClipboard(randomized);
+
+        print("Your password has been copied to your clipboard, enjoy!");
     }
 }
