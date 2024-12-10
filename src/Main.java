@@ -1,4 +1,4 @@
-// A Java program that takes a user input password candidate, encodes it in Base64, and then randomizes the characters.
+// A Java program that takes a user input password candidate, encodes it in Base64, randomizes the characters, and then swaps the case.
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Base64;
@@ -31,16 +31,30 @@ public class Main {
         return new String(characters);
     }
 
-    public static void printAll(String candidate, String encoded, String randomized) {
+    public static void printAll(String candidate, String swapped) {
         print(  "Candidate:\t\t"+candidate+
-                "\nEncoded:\t\t"+encoded+
-                "\nYour password:\t"+randomized);
+                "\nYour password:\t"+swapped);
     }
 
     public static void copyToClipboard(String str) {
         StringSelection selection = new StringSelection(str);
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(selection, null);
+    }
+
+    public static String swapCase(String str) {
+        StringBuilder swap = new StringBuilder();
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (Character.isUpperCase(c)) {
+                swap.append(Character.toLowerCase(c));
+            } else if (Character.isLowerCase(c)) {
+                swap.append(Character.toUpperCase(c));
+            } else {
+                swap.append(c);
+            }
+        }
+        return swap.toString();
     }
 
     public static void main(String[] args) {
@@ -51,17 +65,16 @@ public class Main {
 
         String encoded = encode(candidate);
         String randomized = shuffleString(encoded);
+        String swapped = swapCase(randomized);
 
-        encoded = encode(randomized);
+        encoded = encode(swapped);
         randomized = shuffleString(encoded);
+        swapped = swapCase(randomized);
 
-        encoded = encode(randomized);
-        randomized = shuffleString(encoded);
-
-        printAll(candidate, encoded, randomized);
+        printAll(candidate, swapped);
 
         copyToClipboard(randomized);
 
-        print("Your password has been copied to your clipboard, enjoy!");
+        print("\nYour password has been copied to your clipboard, enjoy!");
     }
 }
